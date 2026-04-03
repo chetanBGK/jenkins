@@ -5,7 +5,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                checkout scm   
+                checkout scm
             }
         }
 
@@ -17,7 +17,10 @@ pipeline {
                 }
             }
             steps {
-                sh 'mvn test'
+                sh '''
+                    cd javaapp-pipeline
+                    mvn test
+                '''
             }
         }
 
@@ -26,7 +29,10 @@ pipeline {
                 branch 'master'
             }
             steps {
-                sh 'mvn clean package'
+                sh '''
+                    cd javaapp-pipeline
+                    mvn clean package
+                '''
             }
         }
 
@@ -36,6 +42,7 @@ pipeline {
             }
             steps {
                 sh '''
+                    cd javaapp-pipeline
                     echo "Deploying application..."
                     java -jar target/java-sample-21-1.0.0.jar
                 '''
